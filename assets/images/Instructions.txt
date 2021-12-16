@@ -1,0 +1,7 @@
+--INSTRUCTIONS TEXTZOO APPLICATION--
+
+1) install expo cli
+2) run 'npm install expo-cli --global'
+3) run 'npm install' in project local folder.
+4) run 'expo start' in local project folder.
+5) Scan the QR and you are good to go.
