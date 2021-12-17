@@ -42,7 +42,7 @@ export default class home extends Component {
       <View style={{ flex: 1, alignItems: "center", alignContent: "center", backgroundColor: "#fff" }}>
      <View style={{ width: "100%", alignContent: "center", alignItems: "center",flexDirection:"row",justifyContent:"center", marginTop: 50, backgroundColor: "#000" , paddingVertical:5}}>
      <TouchableOpacity style={{ width: '15%', justifyContent: 'center' ,alignItems:"center"}}
-          // onPress={()=>this.props.navigation.push("rider_availabiliy")}
+          onPress={()=>this.props.navigation.goBack()}
           >
         <Fontisto name="angle-left" size={18} color="#FFF" />
           </TouchableOpacity>
@@ -71,7 +71,13 @@ export default class home extends Component {
             showsHorizontalScrollIndicator={false}
           >
 
+<TouchableOpacity style={styles.toggle1}
 
+               
+>
+  <Text style={{ textAlign: "center",fontWeight:"bold",color:"#fff" }}>All</Text>
+
+</TouchableOpacity>
             {this.state.toggle.length > 0 ? (
               this.state.toggle.map((item, index) => {
                 return (
@@ -244,8 +250,14 @@ const styles = StyleSheet.create({
 
   },
   toggle: {
-    padding: 5, borderRadius: 50,
+    padding: 7, borderRadius: 50,
     // backgroundColor: "#E6E8FA", 
+    marginHorizontal: 10
+
+  },
+  toggle1: {
+    padding: 7, borderRadius: 50,
+    backgroundColor: "#000", 
     marginHorizontal: 10
 
   },

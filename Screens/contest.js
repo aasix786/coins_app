@@ -68,7 +68,7 @@ export default class contest extends Component {
 
 
           <TouchableOpacity style={styles.SignUp_button} 
-          // onPress={() => this.submit()}
+          onPress={() => this.props.navigation.navigate("player")}
           >
 
             <Text style={{ color: '#fff', fontSize: 18 }}>Deposit</Text>

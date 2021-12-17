@@ -24,9 +24,9 @@ export default class footer extends Component {
               
             <View style={{width:"95%",paddingTop:8,paddingBottom:12,alignItems:"center"}}>
             <View >
-            <MaterialIcons name="people-alt" size={24} color={this.props.title == "star" ? "#ffd700" : "#9e9e9e"} />
+            <MaterialIcons name="people-alt" size={24} color={this.props.title == "player" ? "#ffd700" : "#9e9e9e"} />
               </View>
-              <Text style={{  color: this.props.title == "home" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >Players </Text>
+              <Text style={{  color: this.props.title == "player" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >Players </Text>
               </View> 
             </TouchableOpacity>
 
