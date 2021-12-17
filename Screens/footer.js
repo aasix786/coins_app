@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, TextInput, ScrollView,activeMenu,AsyncStorage } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather, Entypo,SimpleLineIcons,AntDesign } from '@expo/vector-icons';
-import Constants from 'expo-constants';
-console.disableYellowBox = true
-// import { color } from 'react-native-reanimated';
-import { isRequired } from 'react-native/Libraries/DeprecatedPropTypes/DeprecatedColorPropType';
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
-
+import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather,FontAwesome, Entypo,SimpleLineIcons,AntDesign } from '@expo/vector-icons';
 
 export default class footer extends Component {
   constructor(props){
@@ -47,7 +38,7 @@ export default class footer extends Component {
               
             <View style={{width:"95%",paddingTop:8,paddingBottom:12,alignItems:"center"}}>
             <View >
-            <MaterialIcons name="people-alt" size={24} color={this.props.title == "star" ? "#ffd700" : "#9e9e9e"} />
+            <Entypo name="star" size={24} color={this.props.title == "star" ? "#ffd700" : "#9e9e9e"} />
               </View>
               <Text style={{  color: this.props.title == "home" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >Queue</Text>
               </View> 
@@ -61,7 +52,7 @@ export default class footer extends Component {
               
             <View style={{width:"95%",paddingTop:8,paddingBottom:12,alignItems:"center"}}>
             <View >
-            <MaterialIcons name="people-alt" size={24} color={this.props.title == "star" ? "#ffd700" : "#9e9e9e"} />
+            <FontAwesome name="th-list" size={24} color={this.props.title == "star" ? "#ffd700" : "#9e9e9e"} />
               </View>
               <Text style={{  color: this.props.title == "home" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >Roaster</Text>
               </View> 
@@ -76,9 +67,9 @@ export default class footer extends Component {
               
             <View style={{width:"95%",paddingTop:8,paddingBottom:12,alignItems:"center"}}>
             <View >
-            <MaterialIcons name="people-alt" size={24} color={this.props.title == "star" ? "#ffd700" : "#9e9e9e"} />
+            <AntDesign name="checkcircleo" size={24} color={this.props.title == "star" ? "#ffd700" : "#9e9e9e"} />
               </View>
-              <Text style={{  color: this.props.title == "home" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >Home</Text>
+              <Text style={{  color: this.props.title == "home" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >History</Text>
               </View> 
             </TouchableOpacity>
 

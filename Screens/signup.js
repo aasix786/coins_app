@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, ImageBackground, TextInput, Alert, AsyncStorage, Button, Switch, Linking
+  View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, CheckBox, TextInput, Alert, AsyncStorage, Button, Switch, Linking
 } from 'react-native';
 import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather, Entypo, AntDesign, FontAwesome5, Zocial } from '@expo/vector-icons';
-import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-// import Header from './Header'
-console.disableYellowBox = true
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 export default class signup extends Component {

@@ -3,13 +3,9 @@ import {
   View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, ImageBackground, TextInput, Alert, AsyncStorage, Button, Switch
 } from 'react-native';
 import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather, Entypo, AntDesign, FontAwesome5, Zocial } from '@expo/vector-icons';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-// import Header from './Header'
-
-console.disableYellowBox = true
-
-
 
 export default class login extends Component {
   // const [started, setStarted] = useState(false)
