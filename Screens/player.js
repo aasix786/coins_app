@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Dimensions, ImageBackground, TextInput, Alert, AsyncStorage, Button, Linking, Switch, FlatList
+  View, Text, TouchableOpacity, Image, StyleSheet, ScrollView
 } from 'react-native';
-import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Fontisto, Octicons, Feather, Entypo, AntDesign, FontAwesome, FontAwesome5, Zocial } from '@expo/vector-icons';
+import { Feather, Entypo, FontAwesome} from '@expo/vector-icons';
 import Footer from './footer'
 
 export default class player extends Component {

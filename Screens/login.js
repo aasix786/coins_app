@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, ImageBackground, TextInput, Alert, AsyncStorage, Button, Switch
+  View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, TextInput,
 } from 'react-native';
-import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather, Entypo, AntDesign, FontAwesome5, Zocial } from '@expo/vector-icons';
+import {  Ionicons } from '@expo/vector-icons';
+import { loginRequest } from '../services/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -20,7 +22,51 @@ export default class login extends Component {
     }
 
   }
- 
+  login = async () => {
+    try {
+      const { email, password } = this.state;
+
+      if (email == "" && password == "") {
+        alert("E-mail and Password is required")   
+      }
+      else if (email == "" && password != "") {
+        alert("E-mail is required")     
+      }
+      else if (email != "" && password == "") {
+        alert("Password is required")   
+      }
+      
+      else{
+        loginRequest(email, password)
+        .then((res) => {
+          console.log("Login Response ===>")
+          console.log(res.data)
+          if(res.data){
+            let response = res.data;
+            if(response.success){
+              let user_data = response.data;
+              AsyncStorage.setItem("user_data", user_data);
+            this.props.navigation.push("contest");
+            }else{
+              alert(response.message)
+            }
+            
+          }
+          
+    
+       
+        })
+        .catch((error) => {
+        alert("Error: "+error)
+        });
+      }
+
+     
+      
+    } catch (e) {
+      alert("Failed Login")
+    }
+  }
   render() {
 
     return (
@@ -77,7 +123,7 @@ export default class login extends Component {
           </View>
         </View>
    
-        <TouchableOpacity style={styles.SignUp_button} onPress={() => this.props.navigation.navigate("contest")}>
+        <TouchableOpacity style={styles.SignUp_button} onPress={() => this.login()}>
 
           <Text style={{ color: '#fff', fontSize: 18 }}>Login</Text>
 

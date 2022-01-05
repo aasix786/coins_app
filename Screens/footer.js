@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, TextInput, ScrollView,activeMenu,AsyncStorage } from 'react-native';
-import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather,FontAwesome, Entypo,SimpleLineIcons,AntDesign } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { MaterialIcons,FontAwesome, Entypo, AntDesign } from '@expo/vector-icons';
 
 export default class footer extends Component {
   constructor(props){

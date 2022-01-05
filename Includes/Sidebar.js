@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, ImageBackground, TextInput, Linking, AsyncStorage,Alert
+  View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, ImageBackground, TextInput, Linking,Alert
 } from 'react-native';
 import { Ionicons, EvilIcons, MaterialIcons, Entypo, FontAwesome5, AntDesign } from '@expo/vector-icons';
 const screenWidth = Dimensions.get('window').width;

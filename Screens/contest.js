@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, ImageBackground, TextInput, Alert, AsyncStorage, Button, Switch, Linking
+  View, Text, TouchableOpacity, Image, StyleSheet, Dimensions,
 } from 'react-native';
-import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather, Entypo, AntDesign, FontAwesome5, Zocial } from '@expo/vector-icons';
+import { Ionicons, Feather, Entypo, AntDesign} from '@expo/vector-icons';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 import { Drawer } from 'native-base';

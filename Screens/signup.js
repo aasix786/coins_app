@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, Picker, Dimensions, CheckBox, TextInput, Alert, AsyncStorage, Button, Switch, Linking
+  View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, CheckBox, TextInput
 } from 'react-native';
-import { MaterialIcons, Ionicons, EvilIcons, MaterialCommunityIcons, Octicons, Feather, Entypo, AntDesign, FontAwesome5, Zocial } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import { signupRequest } from '../services/auth';
 
 export default class signup extends Component {
   // const [started, setStarted] = useState(false)
@@ -19,18 +20,76 @@ export default class signup extends Component {
       password: "",
       confirm_password: "",
       Favorite_Genres: "",
-      promo_code: "",
       hidePass: true,
       hide_confirm_password: true,
-      is_check: ""
+      is_check: false
     }
 
   }
- 
+  register = async () => {
+    try {
+      const { name, email, password, confirm_password, is_check, contact } = this.state;
 
-  
+      if (name == "") {
+        alert("Name is required")   
+      }
+      else if (contact == "") {
+        alert("Contact is required")   
+      }
+      else if (email == "") {
+        alert("Email is required")   
+      }
+      else if (password == "") {
+        alert("Password is required")   
+      }
+      else if (confirm_password == "") {
+        alert("Confirm Password is required")   
+      }
+      else if (password != confirm_password) {
+        alert("Password do not match")   
+      }
+      
+      else if (!is_check) {
+        alert("Please accept terms and conditions")   
+      }
+      
+      else{
+        let data = {
+          "name" : name,
+          "phone_no" : contact,
+          "email" : email,
+          "password" : password,
+          "confirm_password" : confirm_password
+      }
+        signupRequest(data)
+        .then((res) => {
+          console.log("Register Response ===>")
+          console.log(res.data)
+          if(res.data){
+            let response = res.data;
+            if(response.success){
+             
+            this.props.navigation.push("login");
+            }else{
+              alert(response.message)
+            }
+            
+          }
+          
+    
+       
+        })
+        .catch((error) => {
+        alert("Error: "+error)
+        });
+      }
 
-
+     
+      
+    } catch (e) {
+      alert("Failed Login")
+    }
+  }
   render() {
   
     return (
@@ -116,7 +175,7 @@ export default class signup extends Component {
                 />
               </View>
               <TouchableOpacity style={{ width: "15%", alignItems: "center" }} >
-                <Ionicons name={this.state.hidePass ? "eye-off-sharp" : "eye"} size={24} color="#bcbcbc" onPress={() => this.hidePassword()} />
+                <Ionicons name={this.state.hidePass ? "eye-off-sharp" : "eye"} size={24} color="#bcbcbc" onPress={() => this.setState({hidePass: !this.state.hidePass})} />
               </TouchableOpacity>
             </View>
           </View>
@@ -134,7 +193,7 @@ export default class signup extends Component {
                 />
               </View>
               <TouchableOpacity style={{ width: "15%", alignItems: "center" }} >
-                <Ionicons name={this.state.hide_confirm_password ? "eye-off-sharp" : "eye"} size={24} color="#bcbcbc" onPress={() => this.hide_Confirm_Password()} />
+                <Ionicons name={this.state.hide_confirm_password ? "eye-off-sharp" : "eye"} size={24} color="#bcbcbc" onPress={() => this.setState({hide_confirm_password: !this.state.hide_confirm_password})}  />
               </TouchableOpacity>
             </View>
           </View>
@@ -144,7 +203,10 @@ export default class signup extends Component {
           <View style={{ width: "100%", marginTop: 25, alignItems: "center" }}>
             <View style={{ width: "90%", alignItems: "center", flexDirection: "row" }}>
 
-              <CheckBox onPress={() => this.updateFavourite()} checked={this.state.is_check} />
+            <CheckBox
+          value={this.state.is_check}
+          onValueChange={()=> this.setState({is_check: !this.state.is_check})}
+        />
 
               <View>
                 <Text style={{ paddingLeft: 18, fontWeight: "bold", fontSize: 15 }}>Do you Agree with </Text>
@@ -160,7 +222,7 @@ export default class signup extends Component {
 
           </View>
 
-          <TouchableOpacity style={styles.SignUp_button} onPress={() => this.props.navigation.navigate('login')}>
+          <TouchableOpacity style={styles.SignUp_button} onPress={() => this.register()}>
 
             <Text style={{ color: '#fff', fontSize: 18 }}>Sign Up</Text>
 
