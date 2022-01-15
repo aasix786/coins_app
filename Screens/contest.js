@@ -152,7 +152,7 @@ export default class contest extends Component {
 </View>
 </View>
               <TouchableOpacity style={{ width: "50%", justifyContent: "center", alignItems: "center", paddingTop: 10 }}
-                   onPress={()=>this.props.navigation.navigate("home")}
+                   onPress={()=>this.props.navigation.navigate("my_contests")}
               >
                 <AntDesign name="rightcircle" size={22} color="#e6e6e6" />
               </TouchableOpacity>

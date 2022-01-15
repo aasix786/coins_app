@@ -26,7 +26,7 @@ export default class footer extends Component {
             <View >
             <MaterialIcons name="people-alt" size={24} color={this.props.title == "player" ? "#ffd700" : "#9e9e9e"} />
               </View>
-              <Text style={{  color: this.props.title == "player" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >Players </Text>
+              <Text style={{  color: this.props.title == "player" ? "#fff" : "#B1B1B1",textAlign:"center",fontSize:12 }} >Coins </Text>
               </View> 
             </TouchableOpacity>
 

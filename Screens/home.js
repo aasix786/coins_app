@@ -108,7 +108,7 @@ export default class home extends Component {
 
         return(
           <View key={index} style={{marginTop:10}}>
-          <TouchableOpacity style={styles.popbox1}>
+          <TouchableOpacity onPress={() => this.props.navigation.push("contest_detail")} style={styles.popbox1}>
           <View style={{ paddingHorizontal: 20,flexDirection:"row"}}>
           <Entypo name="star" size={20} color="#ffd700" />
             <Text style={{ fontSize: 15, color: "#808080", fontWeight: "bold",paddingHorizontal:5 }}>UFC $300K Year Final($100K to 1st)</Text>

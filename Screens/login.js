@@ -123,7 +123,11 @@ export default class login extends Component {
           </View>
         </View>
    
-        <TouchableOpacity style={styles.SignUp_button} onPress={() => this.login()}>
+        <TouchableOpacity style={styles.SignUp_button} 
+        // onPress={() => this.login()}
+        onPress={() => this.props.navigation.push("contest")}
+        
+        >
 
           <Text style={{ color: '#fff', fontSize: 18 }}>Login</Text>
 
