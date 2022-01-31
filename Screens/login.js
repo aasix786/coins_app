@@ -45,8 +45,8 @@ export default class login extends Component {
             let response = res.data;
             if(response.success){
               let user_data = response.data;
-              AsyncStorage.setItem("user_data", user_data);
-            this.props.navigation.push("contest");
+              AsyncStorage.setItem('user_data', JSON.stringify(user_data));
+            this.props.navigation.push("home");
             }else{
               alert(response.message)
             }
@@ -124,8 +124,8 @@ export default class login extends Component {
         </View>
    
         <TouchableOpacity style={styles.SignUp_button} 
-        // onPress={() => this.login()}
-        onPress={() => this.props.navigation.push("contest")}
+        onPress={() => this.login()}
+        // onPress={() => this.props.navigation.push("contest")}
         
         >
 

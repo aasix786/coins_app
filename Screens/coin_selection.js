@@ -4,34 +4,61 @@ import {
 } from 'react-native';
 import { Feather, Entypo, FontAwesome} from '@expo/vector-icons';
 import Footer from './footer'
+import { getCoinsData } from '../services/contests';
 
 export default class coin_selection extends Component {
   constructor(props) {
     super(props);
+    this.data = this.props.route.params;
     this.state = {
-      started: false,
-      is_favorite: false,
-      toggle_search: false,
-      entries: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-      toggle: [1, 2, 3, 4, 5],
-      admin_post: [],
-      search: "",
-      tags: [],
-      total_pro_pages: "",
-      tag_selected: 0,
-      current_page: 1,
-      show_pageNo: false,
-      hidePass: true
+      coins_arr:[],
+      contest_id: this.data.contest_id,
+      coin_chosen: this.data.coin_chosen ? this.data.coin_chosen : []
 
     }
 
   }
+  async componentDidMount(){
+    this.fetchCoinsData();
+  }
+  selectCoin = (item) => {
+      this.state.coin_chosen.push(item);
+      console.log("this.state.coin_chosen")
+      console.log(this.state.coin_chosen)
+    this.props.navigation.replace("contest_detail",{contest_id:this.state.contest_id, coin_data : this.state.coin_chosen})
+  }
+  fetchCoinsData = () => {
+    try {
+     
+      getCoinsData()
+      .then((res) => {
+        // console.log("Coins Response ===>")
+        // console.log(res.data)
 
+        if(res.data){
+          let response = res.data;
+          if(response.status.error_code == 0){
+            this.setState({coins_arr:response.data})
+          }else{
+            alert(response.status.error_message)
+          }
+          
+        }
+        
+  
+     
+      })
+      .catch((error) => {
+      console.log("Error: "+error)
+      });
+     
+      
+    } catch (e) {
+      console.log("Internet error")
+    }
+  }
 
   render() {
-
-
-
     return (
 
       <View style={{ flex: 1, alignItems: "center", alignContent: "center", backgroundColor: "#fff" }}>
@@ -202,35 +229,35 @@ export default class coin_selection extends Component {
           </View>
           <View style={styles.searchicon}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 8, paddingBottom: 12, alignItems: "center" }}>
+              <View style={{ width: "95%", alignItems: "center" , paddingVertical:3}}>
                 <Text style={{ color: "#000", textAlign: "center", fontSize: 12 }} >ALL </Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.searchicon}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 8, paddingBottom: 12, alignItems: "center" }}>
+              <View style={{ width: "95%",alignItems: "center", paddingVertical:3 }}>
                 <Text style={{ color: "#000", textAlign: "center", fontSize: 12 }} >MarCap </Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.searchicon}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 8, paddingBottom: 12, alignItems: "center" }}>
+              <View style={{ width: "95%",alignItems: "center", paddingVertical:3 }}>
                 <Text style={{ color: "#000", textAlign: "center", fontSize: 12 }} >Volatility </Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.searchicon}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", alignItems: "center", backgroundColor: "#D1D1D1", borderRadius: 20 }}>
-                <Text style={{ color: "#fff", textAlign: "center", fontSize: 12 }} >Volume</Text>
+              <View style={{ width: "95%", alignItems: "center", paddingVertical:3  }}>
+                <Text style={{ color: "#000", textAlign: "center", fontSize: 12 }} >Volume</Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.searchicon}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 8, paddingBottom: 12, alignItems: "center" }}>
+            <TouchableOpacity style={{ width: "100%", alignItems: "center",backgroundColor: "#D1D1D1", borderRadius: 20 }} >
+              <View style={{ width: "95%", alignItems:"center", paddingVertical:3 }}>
                 <Text style={{ color: "#000", textAlign: "center", fontSize: 12 }} >Price</Text>
               </View>
             </TouchableOpacity>
@@ -261,13 +288,12 @@ export default class coin_selection extends Component {
             </TouchableOpacity>
           </View>
           </View>
-          <View style={{ width: "97%", height: "90%", marginTop: 5,paddingBottom:165 }} >
+          <View style={{ width: "97%", height: "90%", marginTop: 5,paddingBottom:200 }} >
         <ScrollView showsVerticalScrollIndicator={false}>
-        {/* {this.state.entries.length > 0 ?
-      this.state.entries.map((item,index)=>{
-
-        return( */}
-         <View style={{ width: "100%", flexDirection: "row" }}>
+       
+       {this.state.coins_arr.length > 0 && this.state.coins_arr.map((item,index) => {
+         return (
+          <View key={index} style={{ width: "100%", flexDirection: "row" }}>
         
         <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
@@ -278,13 +304,13 @@ export default class coin_selection extends Component {
           </View>
           <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
+            onPress={()=> this.selectCoin(item)}
             >
               <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
               <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
               </View>
               <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
+              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >{item.name}</Text>
               <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
               </View>
             
@@ -300,315 +326,16 @@ export default class coin_selection extends Component {
           <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
+              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >{item.quote.USD.price}</Text>
               </View>
             </TouchableOpacity>
           </View>
           </View>
-          <View style={{ width: "100%", flexDirection: "row",backgroundColor:"#e0e0e0" }}>
+         )
+       })}
         
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star-outlined" size={24} color="black" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row" }}>
-        
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row" }}>
-        
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row" }}>
-        
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row" }}>
-        
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row" }}>
-        
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row" }}>
-        
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
-          <View style={{ width: "100%", flexDirection: "row" }}>
-        
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
-            onPress={()=>this.props.navigation.replace("contest_detail")}
-            >
-              <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
-              </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >Doge</Text>
-              <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
-              </View>
-            
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
-              <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >4</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </View>
+          
+         
 
 
          
