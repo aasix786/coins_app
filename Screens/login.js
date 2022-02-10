@@ -23,7 +23,6 @@ export default class login extends Component {
 
   }
   login = async () => {
-    this.props.navigation.push("home");
     try {
       const { email, password } = this.state;
 

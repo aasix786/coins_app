@@ -141,7 +141,12 @@ if(contest_data){
         <View style={{ flex:1, alignItems: "center", backgroundColor: "#fbfbfb", paddingBottom:130 }}>
         <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 30, backgroundColor: "#000", paddingBottom: 15 }}>
           <View style={{ marginTop: 10, flexDirection: "row" }}>
-            <TouchableOpacity  onPress={()=>this.props.navigation.goBack()} style={{ width: "10%", alignItems: "center" }}>
+            <TouchableOpacity  onPress={()=>{
+               this.props.navigation.reset({
+          index: 0,
+          routes: [{ name: 'contest_lobby' }],
+        });
+            }} style={{ width: "10%", alignItems: "center" }}>
               <AntDesign name="close" size={24} color="#fff" />
             </TouchableOpacity>
             <View style={{ width: "75%", alignContent: "center", alignItems: "center" }}>

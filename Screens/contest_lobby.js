@@ -131,7 +131,7 @@ export default class contest_lobby extends Component {
 
         return(
           <View key={index} style={{marginTop:10}}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate("contest_detail",{contest_id:item.id, coin_data : []})} style={styles.popbox1}>
+          <TouchableOpacity onPress={() => this.props.navigation.push("contest_detail",{contest_id:item.id, coin_data : []})} style={styles.popbox1}>
           <View style={{ paddingHorizontal: 20,flexDirection:"row"}}>
           <Entypo name="star" size={20} color="#ffd700" />
             <Text style={{ fontSize: 15, color: "#808080", fontWeight: "bold",paddingHorizontal:5 }}>{item.name}</Text>
