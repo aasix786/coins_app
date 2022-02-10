@@ -1,2 +1,2 @@
-const URL ="http://192.168.1.141:8080/api/"; 
+const URL ="http://67.225.186.79/api/"; 
 export { URL}
