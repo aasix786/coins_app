@@ -18,7 +18,7 @@ export default class contest_detail extends Component {
       user_id: 0,
       contest_data: null,
       selected_coins_arr : this.data.coin_data,
-      
+
     }
 
   }
@@ -49,17 +49,17 @@ export default class contest_detail extends Component {
           }else{
             alert(response.message)
           }
-          
+
         }
-        
-  
-     
+
+
+
       })
       .catch((error) => {
       console.log("Error: "+error)
       });
-     
-      
+
+
     } catch (e) {
       console.log("Internet error")
     }
@@ -86,7 +86,7 @@ if(contest_data){
       <View style={{ width: "60%", alignItems:"center" }}>
 
         <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
-          <Text style={{ fontSize: 16, color: "#b9b9b9", fontWeight: "bold" }}>SELECT FIGHTER</Text>
+          <Text style={{ fontSize: 16, color: "#5978a1", fontWeight: "bold" }}>Choose Coin</Text>
         </View>
 
 
@@ -126,8 +126,8 @@ if(contest_data){
         <View style={{  paddingTop: 5, alignContent:"center", alignItems:"center", justifyContent:"center" }}>
         <Entypo name="circle-with-cross" size={22} color="grey" />
 </View>
-     
-        
+
+
       </View>
 
     </View>
@@ -135,11 +135,11 @@ if(contest_data){
     slots_arr.push(viewData)
   }
 }
-    
+
 
     return (
         <View style={{ flex:1, alignItems: "center", backgroundColor: "#fbfbfb", paddingBottom:130 }}>
-        <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 30, backgroundColor: "#000", paddingBottom: 15 }}>
+        <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 40, backgroundColor: "#000", paddingBottom: 15 }}>
           <View style={{ marginTop: 10, flexDirection: "row" }}>
             <TouchableOpacity  onPress={()=>{
                this.props.navigation.reset({
@@ -153,11 +153,11 @@ if(contest_data){
               {/* <Image style={{ width: 25, height: 25, resizeMode: "cover" }} source={require('../assets/images/demo_2.png')} /> */}
               <Text style={{fontSize:18, fontWeight:"bold", color:"#fff"}}>Create Lineup</Text>
             </View>
-            <TouchableOpacity style={{ width: "15%" }} 
+            <TouchableOpacity style={{ width: "15%" }}
             onPress={() => this.submitContest()}
             // onPress={()=> this.props.navigation.navigate('submitted_contests')}
             >
-            <Text style={{fontSize:18, fontWeight:"bold", color:"#149aff"}}>Submit</Text>
+            <Text style={{fontSize:18, fontWeight:"bold", color:"#8E995F", marginHorizontal: -20 }}>Submit</Text>
 
             </TouchableOpacity>
 
@@ -178,7 +178,7 @@ if(contest_data){
           <Text style={{fontSize:12, color:"#808080", fontWeight:"bold"}}>Entry {contest_data.entrance_fee}</Text>
 
           </View>
-         
+
           <View style={{ width: "40%", alignItems: "center", height:"100%", alignContent:"center", justifyContent:"center" }}>
           <Text style={{fontSize:12, color:"#808080", fontWeight:"bold"}}>{Moment(contest_data.start_time).format("ddd h:mm A")} EST</Text>
 
@@ -196,22 +196,23 @@ if(contest_data){
 <ScrollView>
 
         {slots_arr}
-       
-        
-        
+
+
+
 </ScrollView>
-       
+
 
 <View style={{width:"100%", alignContent:"center", alignItems:"center", justifyContent:"center", position:"absolute", bottom:0}}>
 
 <View style={{width:"100%", backgroundColor:"#282828", paddingHorizontal:10}}>
 <View style={{flexDirection:"row", width:"100%"}}>
 <View style={{width:"50%", paddingVertical:12}}>
-<Text style={{fontSize:16, fontWeight:"bold", color:"#fff"}}>Positions Filled: <Text>{this.state.selected_coins_arr.length}</Text>/<Text>{contest_data.slots}</Text> </Text>
+<Text style={{fontSize:16, fontWeight:"bold", color:"#fff"}}>Positions Filled: <Text style={{color:"#8E995F"}}>{this.state.selected_coins_arr.length}/</Text>
+<Text style={{color:"#8E995F"}} >{contest_data.slots}</Text> </Text>
 
 </View>
 <View style={{width:"50%", alignItems:"flex-end", paddingVertical:12}}>
-<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Rem Salary: <Text style={{color:"#7ABC6F", fontWeight:"bold"}}>$50,000</Text></Text>
+<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Rem Salary: <Text style={{color:"#8E995F", fontWeight:"bold"}}>$50,000</Text></Text>
 
 
 </View>
@@ -224,7 +225,7 @@ if(contest_data){
 
 </View>
 <View style={{width:"50%", alignItems:"flex-end", paddingBottom:12}}>
-<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Avg Rem/Player: <Text style={{color:"#7ABC6F", fontWeight:"bold"}}>$8,333</Text></Text>
+<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Avg Coin investment <Text style={{color:"#8E995F", fontWeight:"bold"}}>$8,333</Text></Text>
 
 
 </View>
@@ -236,22 +237,22 @@ if(contest_data){
 <View style={{width:"100%", backgroundColor:"#000"}}>
 <View style={{flexDirection:"row", width:"100%"}}>
 <View style={{width:"25%", alignItems:"center", paddingVertical:12}}>
-<Text style={{fontSize:18, fontWeight:"bold", color:"#fff"}}>Clear</Text>
+<Text style={{fontSize:18, fontWeight:"bold", color:"#8E995F"}}>Clear</Text>
 
 </View>
 <View style={{width:"25%", alignItems:"center", paddingVertical:12}}>
-<Text style={{fontSize:18, fontWeight:"bold", color:"#fff"}}>Import</Text>
+<Text style={{fontSize:18, fontWeight:"bold", color:"#8E995F"}}>Import</Text>
 
 </View>
 <View style={{width:"25%", alignItems:"center", paddingVertical:12}}>
-<Text style={{fontSize:18, fontWeight:"bold", color:"#149aff"}}>Reserve</Text>
+<Text style={{fontSize:18, fontWeight:"bold", color:"#8E995F"}}>Reserve</Text>
 
 </View>
 <TouchableOpacity style={{width:"25%", alignItems:"center", paddingVertical:12}}
 onPress={() => this.submitContest()}
 // onPress={()=> this.props.navigation.navigate('submitted_contests')}
 >
-<Text style={{fontSize:18, fontWeight:"bold", color:"#149aff"}}>Submit</Text>
+<Text style={{fontSize:18, fontWeight:"bold", color:"#8E995F"}}>Submit</Text>
 
 </TouchableOpacity>
 </View>
@@ -259,9 +260,9 @@ onPress={() => this.submitContest()}
 
 </View>
 </>}
-       
-       
-       
+
+
+
 
       </View>
 
@@ -276,7 +277,7 @@ onPress={() => this.submitContest()}
 }
 const styles = StyleSheet.create({
   popbox1: {
-    
+
     width: "100%",
     flexDirection: "row",
     backgroundColor: "#fff",

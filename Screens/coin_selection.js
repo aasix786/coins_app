@@ -29,7 +29,7 @@ export default class coin_selection extends Component {
   }
   fetchCoinsData = () => {
     try {
-     
+
       getCoinsData()
       .then((res) => {
         // console.log("Coins Response ===>")
@@ -42,17 +42,17 @@ export default class coin_selection extends Component {
           }else{
             alert(response.status.error_message)
           }
-          
+
         }
-        
-  
-     
+
+
+
       })
       .catch((error) => {
       console.log("Error: "+error)
       });
-     
-      
+
+
     } catch (e) {
       console.log("Internet error")
     }
@@ -69,7 +69,7 @@ export default class coin_selection extends Component {
             <Entypo name="cross" size={22} color="#FFF" />
           </TouchableOpacity>
           <View style={{ width: '85%', paddingRight: 40 }}>
-            <Text style={{ color: '#9AEC2E', fontSize: 18, textAlign: "center", fontWeight: "bold" }}>02:52 </Text>
+            <Text style={{ color: '#8E995F', fontSize: 18, textAlign: "center", fontWeight: "bold" }}>02:52 </Text>
 
             <Text style={{ color: '#cccccc', fontSize: 14, fontWeight: "bold", textAlign: "center" }}>Pick 4 of 5</Text>
           </View>
@@ -147,7 +147,7 @@ export default class coin_selection extends Component {
                 <View style={{ flexDirection: "row" }}>
                   <View>
                     <Text style={{ color: '#9AEC2E', fontSize: 12, textAlign: "center", fontWeight: "bold" }}>On the clock:</Text>
-                    <Text style={{ color: '#fff', fontSize: 15, textAlign: "center", fontWeight: "bold", paddingTop: 5 }}>DK-ZSmith</Text>
+                    <Text style={{ color: '#fff', fontSize: 15, textAlign: "center", fontWeight: "bold", paddingTop: 5 }}>Doge</Text>
                   </View>
                   <View style={{ paddingLeft: 10 }}>
                     <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
@@ -209,11 +209,9 @@ export default class coin_selection extends Component {
                 <Text style={{ color: '#cccccc', fontSize: 14, textAlign: "center", fontWeight: "bold" }}>Last Pick : </Text>
               </View>
               <View>
-                <Text style={{ color: '#fff', fontSize: 14, textAlign: "center", fontWeight: "bold" }}>K.Golaaday</Text>
+                <Text style={{ color: '#8E995F', fontSize: 14, textAlign: "center", fontWeight: "bold" }}>Ardana</Text>
               </View>
-              <View>
-                <Text style={{ color: '#cccccc', fontSize: 14, textAlign: "center", fontWeight: "bold", paddingLeft: 5 }}>K.Golaaday</Text>
-              </View>
+
             </View>
 
           </View>
@@ -265,7 +263,7 @@ export default class coin_selection extends Component {
         </View>
 
         <View style={{ width: "100%", flexDirection: "row", paddingVertical: 1,backgroundColor:"#f5f5f5" }}>
-        
+
         <View style={{   width: "64%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
@@ -290,20 +288,20 @@ export default class coin_selection extends Component {
           </View>
           <View style={{ width: "97%", height: "90%", marginTop: 5,paddingBottom:200 }} >
         <ScrollView showsVerticalScrollIndicator={false}>
-       
+
        {this.state.coins_arr.length > 0 && this.state.coins_arr.map((item,index) => {
          return (
           <View key={index} style={{ width: "100%", flexDirection: "row" }}>
-        
+
         <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Entypo name="star" size={24} color="#71a330" />
+              <Entypo name="star" size={24} color="#5978a1" />
               </View>
             </TouchableOpacity>
           </View>
           <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
-            <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}} 
+            <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}}
             onPress={()=> this.selectCoin(item)}
             >
               <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
@@ -313,7 +311,7 @@ export default class coin_selection extends Component {
               <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >{item.name}</Text>
               <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
               </View>
-            
+
             </TouchableOpacity>
           </View>
           <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
@@ -333,12 +331,12 @@ export default class coin_selection extends Component {
           </View>
          )
        })}
-        
-          
-         
 
 
-         
+
+
+
+
 
           </ScrollView>
  </View>
@@ -444,7 +442,7 @@ const styles = StyleSheet.create({
   },
   toggle: {
     padding: 5, borderRadius: 50,
-    // backgroundColor: "#E6E8FA", 
+    // backgroundColor: "#E6E8FA",
     marginHorizontal: 10
 
   },

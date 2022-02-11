@@ -20,14 +20,14 @@ export default class contest_lobby extends Component {
       tag_selected: 0,
 
     }
-  
+
   }
   componentDidMount(){
     this.fetchUpcomingContests();
   }
   fetchUpcomingContests = () => {
     try {
-      
+
       getUpcomingContests()
       .then((res) => {
         console.log("Contests Response ===>")
@@ -40,26 +40,26 @@ export default class contest_lobby extends Component {
           }else{
             alert(response.message)
           }
-          
+
         }
-        
-  
-     
+
+
+
       })
       .catch((error) => {
       console.log("Error: "+error)
       });
-     
-      
+
+
     } catch (e) {
       console.log("Internet error")
     }
   }
 
   render() {
-   
 
-    
+
+
     return (
 
       <View style={{ flex: 1, alignItems: "center", alignContent: "center", backgroundColor: "#fff" }}>
@@ -70,20 +70,20 @@ export default class contest_lobby extends Component {
         <Fontisto name="angle-left" size={18} color="#FFF" />
           </TouchableOpacity>
       <View style={{width: '85%',paddingRight:40}}>
-      <Text style={{ color: '#fff', fontSize: 18,textAlign:"center" }}>MMA </Text>
+      <Text style={{ color: '#fff', fontSize: 18,textAlign:"center" }}>FoolioBoost </Text>
       </View>
      </View>
-    
+
               <View style={{ width: "100%", alignContent: "center", alignItems: "center",justifyContent:"center", borderTopColor:"#1d1d1d",borderTopWidth:1, backgroundColor: "#000" }}>
      <View style={{flexDirection:"row"}}>
      <View style={{paddingVertical:5}}>
       <Text style={{ color: '#fff', fontSize: 16 }}>Contest | SAT 4:00 PM EST | </Text>
       </View>
       <View style={{paddingVertical:5}}>
-      <Text style={{ color: '#71a330', fontSize: 16 }}>14 FIGHTS </Text>
+      <Text style={{ color: '#8E995F', fontSize: 16, fontWeight:"bold", }}>5 Openings </Text>
       </View>
      </View>
-    
+
               </View>
               <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 5,  }}>
       <Text style={{ color: '#000', fontSize: 18 }}>Contests</Text>
@@ -96,7 +96,7 @@ export default class contest_lobby extends Component {
 
 <TouchableOpacity style={styles.toggle1}
 
-               
+
 >
   <Text style={{ textAlign: "center",fontWeight:"bold",color:"#fff" }}>All</Text>
 
@@ -107,7 +107,7 @@ export default class contest_lobby extends Component {
 
                   <TouchableOpacity key={index} style={[styles.toggle, { backgroundColor: this.state.tag_selected == item.uuid ? '#00a2fb' : "#E6E8FA" }]}
 
-               
+
                   >
                     <Text style={{ textAlign: "center",fontWeight:"bold" }}>featured</Text>
 
@@ -119,7 +119,7 @@ export default class contest_lobby extends Component {
             ) : null
             }
 
-          
+
           </ScrollView>
 
 
@@ -133,7 +133,7 @@ export default class contest_lobby extends Component {
           <View key={index} style={{marginTop:10}}>
           <TouchableOpacity onPress={() => this.props.navigation.push("contest_detail",{contest_id:item.id, coin_data : []})} style={styles.popbox1}>
           <View style={{ paddingHorizontal: 20,flexDirection:"row"}}>
-          <Entypo name="star" size={20} color="#ffd700" />
+          <Entypo name="star" size={20} color="#5978a1" />
             <Text style={{ fontSize: 15, color: "#808080", fontWeight: "bold",paddingHorizontal:5 }}>{item.name}</Text>
           </View>
   <View style={{flexDirection:"row"}}>
@@ -141,14 +141,14 @@ export default class contest_lobby extends Component {
     <View style={{ width: "90%", justifyContent: "center", alignItems: "center", paddingTop: 5 }}>
     <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>12</Text>
     <Text style={{ fontSize: 10, color: "#808080", fontWeight: "bold" ,paddingVertical:3}}>ENTRIES(1/{item.slots})</Text>
-    <Text style={{ fontSize: 10, color: "#808080", fontWeight: "bold" }}>STARTS: {Moment(item.start_time).format("ddd h:mm A")} EST </Text>
+    <Text style={{ fontSize: 10, color: "#808080", fontWeight: "bold" }}>{Moment(item.start_time).format("ddd h:mm A")} EST </Text>
     {/* Sat 4:00 PM EST */}
     </View>
   </View>
   <View style={{ width: "35%",alignItems:"center",borderLeftWidth:1,borderLeftColor:"#e2e2e2" }}>
 
     <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
-      <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>{item.entrance_fee}</Text>
+      <Text style={{ fontSize: 18, color: "#8E995F", fontWeight: "bold" }}>{item.entrance_fee}</Text>
     </View>
     <View style={{ paddingTop: 5, paddingHorizontal: 10 }}>
       <Text style={{ fontSize: 12, color: "#808080", fontWeight: "bold" }}>ENTRY FEE</Text>
@@ -158,8 +158,8 @@ export default class contest_lobby extends Component {
   <View style={{ width: "30%",alignItems:"center",borderLeftWidth:1,borderLeftColor:"#e2e2e2" }}>
 
     <View style={{ paddingHorizontal: 10, paddingTop: 5,flexDirection:"row" }}>
-      <Text style={{ fontSize: 18, color: "#006400", fontWeight: "bold",paddingHorizontal:5 }}>$300,000</Text>
-      <View style={{padding:5,borderWidth:1,borderColor:"#006400",backgroundColor:"#006400",borderRadius:5}}>
+      <Text style={{ fontSize: 18, color: "#5978a1", fontWeight: "bold",paddingHorizontal:5 }}>$100K</Text>
+      <View style={{padding:5,borderWidth:1,borderColor:"#5978a1",backgroundColor:"#5978a1",borderRadius:5}}>
       <FontAwesome name="google" size={12} color="#fff" />
       </View>
     </View>
@@ -176,12 +176,12 @@ export default class contest_lobby extends Component {
         )
       })
       :null
-      
+
       }
- 
+
  </ScrollView>
  </View>
-        
+
 
 
 
@@ -205,9 +205,9 @@ export default class contest_lobby extends Component {
 }
 const styles = StyleSheet.create({
   popbox1: {
-   
+
     width: "100%",
-    
+
     backgroundColor: "#fff",
     marginTop: 5,
     marginBottom: 1,
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 6,
   },
-  
+
   pic: {
 
     height: 200,
@@ -275,13 +275,13 @@ const styles = StyleSheet.create({
   },
   toggle: {
     padding: 7, borderRadius: 50,
-    // backgroundColor: "#E6E8FA", 
+    // backgroundColor: "#E6E8FA",
     marginHorizontal: 10
 
   },
   toggle1: {
     padding: 7, borderRadius: 50,
-    backgroundColor: "#000", 
+    backgroundColor: "#000",
     marginHorizontal: 10
 
   },
