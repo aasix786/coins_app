@@ -27,7 +27,7 @@ export default class home extends Component {
     }
 
   }
-  
+
   closeDrawer = () => {
     this.drawer._root.close()
   };
@@ -43,7 +43,7 @@ export default class home extends Component {
       <Drawer ref={(ref) => { this.drawer = ref; }} content={<SideBar navigation={this.props.navigation} />} onClose={() => this.closeDrawer()}  >
         <View style={{ width: screenWidth, height: screenHeight, alignItems: "center", backgroundColor: "#fbfbfb" }}>
 
-          <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 30, backgroundColor: "#000", paddingBottom: 15 }}>
+          <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 50, backgroundColor: "#000", paddingBottom: 15 }}>
             <View style={{ marginTop: 10, flexDirection: "row" }}>
               <TouchableOpacity onPress={() => this.openDrawer()} style={{ width: "10%", alignItems: "center" }}>
                 <Entypo name="menu" size={24} color="#fff" />
@@ -62,12 +62,10 @@ export default class home extends Component {
 
           </View>
 
-          <View style={{ width: "90%", paddingTop: 5 }}>
-            <Text style={{ fontSize: 12, fontWeight: "bold", color: "#808080" }}>Welcome</Text>
-          </View>
 
 
-          <TouchableOpacity style={styles.SignUp_button} 
+
+          <TouchableOpacity style={styles.SignUp_button}
           onPress={() => this.props.navigation.navigate("player")}
           >
 
@@ -85,10 +83,10 @@ export default class home extends Component {
                   <Entypo name="star-outlined" size={24} color="black" />
                 </View>
                 <View style={{ width: "50%", paddingTop: 5 }}>
-                  <Text style={{ fontSize: 12, fontWeight: "bold", color: "#808080", textAlign: "center" }}>Featured</Text>
+                  <Text style={{ fontSize: 12, fontWeight: "bold", color: "#808080", textAlign: "center" }}>Account</Text>
                 </View>
                 <TouchableOpacity style={{ width: "25%", alignContent: "center", alignItems: "center" }}
-               
+
                 >
                   <Entypo name="star-outlined" size={24} color="black" />
                 </TouchableOpacity>
@@ -119,7 +117,7 @@ export default class home extends Component {
               </View>
 
             </View>
-            <TouchableOpacity style={{ width: "15%", alignItems: "center" }} 
+            <TouchableOpacity style={{ width: "15%", alignItems: "center" }}
              onPress={()=>this.props.navigation.navigate("contest_lobby")}
              >
               <View style={{ width: "90%", justifyContent: "center", alignItems: "center", paddingTop: 10 }}>
@@ -140,13 +138,13 @@ export default class home extends Component {
                 <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>My Contest</Text>
               </View>
               <View style={{ paddingTop: 5, paddingHorizontal: 10 }}>
-                <Text style={{ fontSize: 12, color: "#a9a9a9" }}>Live,Upcoming & History</Text>
+                <Text style={{ fontSize: 12, color: "#a9a9a9" }}>Live, Upcoming & History</Text>
               </View>
 
             </View>
             <View style={{ width: "25%", alignItems: "center" ,flexDirection:"row"}}>
             <View style={{ width: "50%", paddingTop: 10,alignItems:'center' }}>
-            <View style={{ width: "50%", backgroundColor: "#ef8c3a" }}>
+            <View style={{ width: "50%", backgroundColor: "#8E995F" }}>
 
 <Text style={{ fontSize: 13, color: "#fff", textAlign: "center" }}>6</Text>
 </View>
@@ -157,7 +155,7 @@ export default class home extends Component {
                 <AntDesign name="rightcircle" size={22} color="#e6e6e6" />
               </TouchableOpacity>
             </View>
-           
+
 
           </View>
           <View style={styles.popbox}>
@@ -169,7 +167,7 @@ export default class home extends Component {
             <View style={{ width: "60%", }}>
 
               <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
-                <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>My Linups</Text>
+                <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>My Picks</Text>
               </View>
               <View style={{ paddingTop: 5, paddingHorizontal: 10 }}>
                 <Text style={{ fontSize: 12, color: "#a9a9a9" }}>Edit & Enter</Text>
@@ -178,7 +176,7 @@ export default class home extends Component {
             </View>
             <View style={{ width: "25%", alignItems: "center" ,flexDirection:"row"}}>
             <View style={{ width: "50%", paddingTop: 10,alignItems:'center' }}>
-            <View style={{ width: "50%", backgroundColor: "#ef8c3a" }}>
+            <View style={{ width: "50%", backgroundColor: "#8E995F" }}>
 
 <Text style={{ fontSize: 13, color: "#fff", textAlign: "center" }}>6</Text>
 </View>
@@ -189,7 +187,7 @@ export default class home extends Component {
                 <AntDesign name="rightcircle" size={22} color="#e6e6e6" />
               </TouchableOpacity>
             </View>
-           
+
 
           </View>
 
@@ -205,18 +203,18 @@ export default class home extends Component {
                 <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>Create Linups</Text>
               </View>
               <View style={{ paddingTop: 5, paddingHorizontal: 10 }}>
-                <Text style={{ fontSize: 12, color: "#a9a9a9" }}>Build Todays WinningFantasy Team!</Text>
+                <Text style={{ fontSize: 12, color: "#a9a9a9" }}>Build Todays Winning Portfolio!</Text>
               </View>
 
             </View>
-            <TouchableOpacity style={{ width: "15%", alignItems: "center" }} 
+            <TouchableOpacity style={{ width: "15%", alignItems: "center" }}
             //  onPress={()=>this.props.navigation.navigate("home")}
              >
               <View style={{ width: "90%", justifyContent: "center", alignItems: "center", paddingTop: 10 }}>
                 <AntDesign name="rightcircle" size={22} color="#e6e6e6" />
               </View>
             </TouchableOpacity>
-           
+
 
           </View>
           <View style={styles.popbox}>
@@ -231,24 +229,24 @@ export default class home extends Component {
                 <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>Create Linups</Text>
               </View>
               <View style={{ paddingTop: 5, paddingHorizontal: 10 }}>
-                <Text style={{ fontSize: 12, color: "#a9a9a9" }}>Create Hed to head or League contest pulic or private</Text>
+                <Text style={{ fontSize: 12, color: "#a9a9a9" }}>Create a Boost Contest Pulic or Private</Text>
               </View>
 
             </View>
-            <TouchableOpacity style={{ width: "15%", alignItems: "center" }} 
+            <TouchableOpacity style={{ width: "15%", alignItems: "center" }}
             //  onPress={()=>this.props.navigation.navigate("home")}
              >
               <View style={{ width: "90%", justifyContent: "center", alignItems: "center", paddingTop: 10 }}>
                 <AntDesign name="rightcircle" size={22} color="#e6e6e6" />
               </View>
             </TouchableOpacity>
-           
+
 
           </View>
 
           <View style={{ width: "90%", marginTop: 20}}>
                 <Text style={{  fontSize: 13, color: "#a9a9a9",textAlign:"center"}}>
-                REFER-A-FRIEND and earn up to 35% commission for every friend who plays! 
+                REFER-A-FRIEND and earn up to 20% commission for every friend who plays!
           </Text>
                 </View>
                 <View style={{ width: "90%", marginTop: 10}}>
@@ -258,19 +256,10 @@ export default class home extends Component {
                 </View>
                 <View style={{ width: "90%"}}>
                 <Text style={{  fontSize: 13, color: "#a9a9a9",textAlign:"center"}}>
-                For EVERY friend you refer,you'll BOTH get $25
+                For EVERY friend you refer, you'll BOTH get 25 Boost
           </Text>
                 </View>
-                <View style={{ width: "90%"}}>
-                <Text style={{  fontSize: 13, color: "#a9a9a9",textAlign:"center"}}>
-                Draft Kings Dollars
-          </Text>
-                </View>
-                <View style={{ width: "90%"}}>
-                <Text style={{  fontSize: 13, color: "#a9a9a9",textAlign:"center"}}>
-               (Expire 10:00am ET8 /20/2021)
-          </Text>
-                </View>
+
 
         </View>
       </Drawer>
@@ -383,8 +372,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: "center",
     borderRadius: 10,
-    borderColor: "#71a330",
-    backgroundColor: "#71a330",
+    borderColor: "#000000",
+    backgroundColor: "#000000",
     borderWidth: 1
   },
 });
