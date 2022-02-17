@@ -94,7 +94,7 @@ export default class coin_selection extends Component {
                     <Text style={{ color: '#fff', fontSize: 15, textAlign: "center", fontWeight: "bold", paddingTop: 5 }}>BTC</Text>
                   </View>
                   <View style={{ paddingLeft: 10 }}>
-                    <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
+                    <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/bitcoin.png")} />
                   </View>
                 </View>
               </View>
