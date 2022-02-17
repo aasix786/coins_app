@@ -80,6 +80,7 @@ if(contest_data){
       viewData = <View style={styles.popbox1}>
       <View style={{ width: "15%", alignItems: "center" }}>
         <View style={{ width: "90%", justifyContent: "center", alignItems: "center" }}>
+
           <Image style={styles.box} source={require('../assets/images/f.png')} />
         </View>
       </View>
@@ -105,7 +106,31 @@ if(contest_data){
       viewData = <View style={styles.popbox1}>
       <View style={{ width: "15%", alignItems: "center" }}>
         <View style={{ width: "90%", justifyContent: "center", alignItems: "center" }}>
-          <Image style={styles.box} source={require('../assets/12.png')} />
+        {this.state.selected_coins_arr[i].symbol == "BTC" ? (
+              <Image  style={styles.box} source={require("../assets/coins/bitcoin.png")} />
+              ): this.state.selected_coins_arr[i].symbol == "ETH" ? (
+              <Image  style={styles.box} source={require("../assets/coins/etherium.png")} />
+              ):this.state.selected_coins_arr[i].symbol == "USDT" ? (
+              <Image  style={styles.box} source={require("../assets/coins/tether.jpg")} />
+              ):this.state.selected_coins_arr[i].symbol == "BNB" ? (
+              <Image  style={styles.box} source={require("../assets/coins/BNB.png")} />
+              ):this.state.selected_coins_arr[i].symbol == "USDC" ? (
+              <Image  style={styles.box} source={require("../assets/coins/USD-coin.png")} />
+              ):this.state.selected_coins_arr[i].symbol == "XRP" ? (
+              <Image  style={styles.box} source={require("../assets/coins/XRP.png")} />
+              ):this.state.selected_coins_arr[i].symbol == "ADA" ? (
+              <Image  style={styles.box} source={require("../assets/coins/Cordano.jpeg")} />
+              ):this.state.selected_coins_arr[i].symbol == "SOL" ? (
+              <Image  style={styles.box} source={require("../assets/coins/solana.jpeg")} />
+              ):this.state.selected_coins_arr[i].symbol == "AVAX" ? (
+              <Image  style={styles.box} source={require("../assets/coins/avalanche.jpeg")} />
+              ):this.state.selected_coins_arr[i].symbol == "LUNA" ? (
+              <Image  style={styles.box} source={require("../assets/coins/terra-luna.webp")} />
+              ):
+              (
+                <Image style={styles.box} source={require('../assets/12.png')} />
+              )}
+          
         </View>
       </View>
       <View style={{ width: "47%" }}>

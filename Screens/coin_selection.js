@@ -286,7 +286,7 @@ export default class coin_selection extends Component {
             </TouchableOpacity>
           </View>
           </View>
-          <View style={{ width: "97%", height: "90%", marginTop: 5,paddingBottom:200 }} >
+          <View style={{ width: "97%", height: "90%", marginTop: 5,paddingBottom:300 }} >
         <ScrollView showsVerticalScrollIndicator={false}>
 
        {this.state.coins_arr.length > 0 && this.state.coins_arr.map((item,index) => {
@@ -305,7 +305,30 @@ export default class coin_selection extends Component {
             onPress={()=> this.selectCoin(item)}
             >
               <View style={{ width: "30%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
+              {item.symbol == "BTC" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/bitcoin.png")} />
+              ): item.symbol == "ETH" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/etherium.png")} />
+              ):item.symbol == "USDT" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/tether.jpg")} />
+              ):item.symbol == "BNB" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/BNB.png")} />
+              ):item.symbol == "USDC" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/USD-coin.png")} />
+              ):item.symbol == "XRP" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/XRP.png")} />
+              ):item.symbol == "ADA" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/Cordano.jpeg")} />
+              ):item.symbol == "SOL" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/solana.jpeg")} />
+              ):item.symbol == "AVAX" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/avalanche.jpeg")} />
+              ):item.symbol == "LUNA" ? (
+              <Image style={{ width: 30, height: 30, resizeMode: "contain", borderRadius: 80 }} source={require("../assets/coins/terra-luna.webp")} />
+              ):
+              (
+                <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
+              )}
               </View>
               <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
               <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >{item.name}</Text>

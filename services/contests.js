@@ -11,9 +11,14 @@ export const getUpcomingContests = () => {
   };
   export const getCoinsData = () => {
     const headers = {
-      'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c',
+      'X-CMC_PRO_API_KEY': 'b7603765-62b7-44d1-827c-75e0ab60b116',
     }
-    return  axios.get(`https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=10&convert=USD`,{
+
+    // const headers = {
+    //   'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c',
+    // }
+    // return  axios.get(`https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=10&convert=USD`,{
+      return  axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=10&convert=USD`,{
       headers: headers
     })
   };
