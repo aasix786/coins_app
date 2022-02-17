@@ -264,14 +264,14 @@ export default class coin_selection extends Component {
 
         <View style={{ width: "100%", flexDirection: "row", paddingVertical: 1,backgroundColor:"#f5f5f5" }}>
 
-        <View style={{   width: "64%",alignItems: "center",justifyContent: "center",}}>
+        <View style={{   width: "54%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
               <Text style={{ color: "#000", textAlign: "center", fontSize: 12,fontWeight:"bold" }} >Coin </Text>
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{   width: "17%",alignItems: "center",justifyContent: "center",}}>
+          <View style={{   width: "22%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
               <Text style={{ color: "#000", textAlign: "center", fontSize: 12,fontWeight:"bold" }} >Relevance</Text>
@@ -281,7 +281,7 @@ export default class coin_selection extends Component {
           <View style={{   width: "17%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
-              <Text style={{ color: "#000", textAlign: "center", fontSize: 12,fontWeight:"bold" }} >Freq.</Text>
+              <Text style={{ color: "#000", textAlign: "right", fontSize: 12,fontWeight:"bold" }} >Price <Text style={{fontSize:8}}>(USD)</Text></Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -293,14 +293,14 @@ export default class coin_selection extends Component {
          return (
           <View key={index} style={{ width: "100%", flexDirection: "row" }}>
 
-        <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
+        <View style={{   width: "10%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "95%", paddingTop: 5, paddingBottom: 8, alignItems: "center" }}>
               <Entypo name="star" size={24} color="#5978a1" />
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{   width: "55%",alignItems: "center",justifyContent: "center",}}>
+          <View style={{   width: "50%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" ,flexDirection:"row"}}
             onPress={()=> this.selectCoin(item)}
             >
@@ -330,7 +330,7 @@ export default class coin_selection extends Component {
                 <Image style={{ width: 20, height: 20, resizeMode: "cover", borderRadius: 80 }} source={require("../assets/images/photos.png")} />
               )}
               </View>
-              <View style={{ width: "70%", paddingTop: 5, paddingBottom: 8}}>
+              <View style={{ width: "65%", paddingTop: 5, paddingBottom: 8}}>
               <Text style={{ color: "#000", fontSize: 15,fontWeight:"bold" }} >{item.name}</Text>
               <Text style={{ color: "#cccccc", fontSize: 10,fontWeight:"bold" }} >-5.97% (24h %)</Text>
               </View>
@@ -344,10 +344,10 @@ export default class coin_selection extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={{   width: "15%",alignItems: "center",justifyContent: "center",}}>
+          <View style={{   width: "25%",alignItems: "center",justifyContent: "center",}}>
             <TouchableOpacity style={{ width: "100%", alignItems: "center" }} >
               <View style={{ width: "60%", paddingTop: 5, paddingBottom: 8}}>
-              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >{item.quote.USD.price}</Text>
+              <Text style={{ color: "#000", fontSize: 12,fontWeight:"bold" }} >$ {((Math.round(item.quote.USD.price * 100) / 100).toLocaleString()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </Text>
               </View>
             </TouchableOpacity>
           </View>
