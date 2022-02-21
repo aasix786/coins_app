@@ -23,7 +23,7 @@ export default class coin_selection extends Component {
   }
   selectCoin = (item) => {
     let present = this.state.coin_chosen.filter(obj => {
-      return obj.id === item.id
+      return obj.symbol === item.symbol
     })
    if(present && present.length > 0){
      alert("Can't select same coin again")
