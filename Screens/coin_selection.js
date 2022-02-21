@@ -22,18 +22,22 @@ export default class coin_selection extends Component {
     this.fetchCoinsData();
   }
   selectCoin = (item) => {
+    let present = this.state.coin_chosen.filter(obj => {
+      return obj.id === item.id
+    })
+   if(present && present.length > 0){
+     alert("Can't select same coin again")
+   } else{
       this.state.coin_chosen.push(item);
-      console.log("this.state.coin_chosen")
-      console.log(this.state.coin_chosen)
-    this.props.navigation.replace("contest_detail",{contest_id:this.state.contest_id, coin_data : this.state.coin_chosen})
+      this.props.navigation.replace("contest_detail",{contest_id:this.state.contest_id, coin_data : this.state.coin_chosen})
+   }
+    
   }
   fetchCoinsData = () => {
     try {
 
       getCoinsData()
       .then((res) => {
-        // console.log("Coins Response ===>")
-        // console.log(res.data)
 
         if(res.data){
           let response = res.data;
@@ -49,12 +53,12 @@ export default class coin_selection extends Component {
 
       })
       .catch((error) => {
-      console.log("Error: "+error)
+      // console.log("Error: "+error)
       });
 
 
     } catch (e) {
-      console.log("Internet error")
+      // console.log("Internet error")
     }
   }
 

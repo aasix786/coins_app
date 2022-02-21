@@ -1,39 +1,62 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, Dimensions,
+  View, Text, TouchableOpacity, Image, StyleSheet,
 } from 'react-native';
-import { Ionicons, Feather, Entypo, AntDesign} from '@expo/vector-icons';
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
-import { Drawer } from 'native-base';
-import SideBar from '../Includes/Sidebar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Moment from 'moment';
+import { Fontisto, Feather, Entypo, AntDesign} from '@expo/vector-icons';
+import { getMyContests } from '../services/contests';
 
 export default class my_contests extends Component {
-  // const [started, setStarted] = useState(false)
   constructor(props) {
     super(props);
     this.state = {
-      started: false,
-      name: "",
-      contact: "",
-      email: "",
-      password: "",
-      confirm_password: "",
-      Favorite_Genres: "",
-      promo_code: "",
-      hidePass: true,
-      hide_confirm_password: true,
-      is_check: ""
+      contests_arr: [],
     }
 
   }
-  
-  closeDrawer = () => {
-    this.drawer._root.close()
-  };
-  openDrawer = () => { this.drawer._root.open() };
+  async componentDidMount(){
+    const val = await AsyncStorage.getItem("user_data");
+    let user_data = JSON.parse(val);
+    let user_id = user_data.id;
+    this.setState({user_id:user_id})
+    this.fetchMyContests();
+  }
+  fetchMyContests = () => {
+    const {user_id} = this.state
+    let data = {
+      "user_id" : user_id,
+    }
+    console.log("user_id")
+    console.log(user_id)
+    try {
+      getMyContests(data)
+      .then((res) => {
+        console.log("Contests Response ===>")
+        console.log(res.data)
+
+        if(res.data){
+          let response = res.data;
+          if(response.success){
+            this.setState({contests_arr:response.data})
+          }else{
+            alert(response.message)
+          }
+
+        }
 
 
+
+      })
+      .catch((error) => {
+      console.log("Error: "+error)
+      });
+
+
+    } catch (e) {
+      console.log("Internet error")
+    }
+  }
   render() {
 
     return (
@@ -42,15 +65,18 @@ export default class my_contests extends Component {
 
       <View style={{ flex:1, alignItems: "center", backgroundColor: "#fbfbfb" }}>
 
-      <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 30, backgroundColor: "#000", paddingBottom: 15 }}>
+      <View style={{ width: "100%",  marginTop: 30, backgroundColor: "#000", paddingBottom: 15 }}>
         <View style={{ paddingTop: 20, flexDirection: "row" }}>
-          <TouchableOpacity  style={{ width: "10%", alignItems: "center" }}>
+        <TouchableOpacity style={{ width: '30%'}}
+          onPress={()=>this.props.navigation.goBack()}
+          >
+        <Fontisto name="angle-left" size={18} color="#FFF" />
           </TouchableOpacity>
-          <View style={{ width: "50%", alignItems: "center" }}>
-            <Text style={{color:"#fff"}}>Upcoming</Text>
+          <View style={{ width: "40%", alignItems: "center" }}>
+            <Text style={{color:"#fff"}}>My Contests</Text>
           </View>
-          <TouchableOpacity style={{ width: "10%", flexDirection:"row", alignContent:"space-between" }}>
-            <View style={{paddingHorizontal:5}}>
+          {/* <TouchableOpacity style={{ width: "30%", flexDirection:"row", alignContent:"flex-end" }}>
+            <View style={{paddingHorizontal:5, alignContent:"flex-end"}}>
             <Entypo name="camera" size={24} color="#fff" />
 
             </View>
@@ -58,7 +84,7 @@ export default class my_contests extends Component {
             <Feather name="bell" size={24} color="#fff" />
 
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
         </View>
 
@@ -99,10 +125,20 @@ export default class my_contests extends Component {
         <Text style={{ fontSize: 14, fontWeight: "bold", color: "grey" }}>UPCOMING CONTESTS</Text>
       </View>
 
-
-      <View style={styles.popbox1}>
+      {this.state.contests_arr.length > 0 ?
+      this.state.contests_arr.map((item,index)=>{
+        let editable = false;
+          let current_dateTime = Moment().format();
+          let contest_dateTime = Moment(item.start_time).format();
+          let difference = Moment(contest_dateTime).diff(Moment(current_dateTime))
+          if(difference > 0){
+            editable = true
+          }
+          
+                  return(
+      <View key={index} style={styles.popbox1}>
         <View style={{}}>
-          <Text style={{fontSize:12, fontWeight:"bold"}}>NBA $40K And -One [20 Entry Max]</Text>
+          <Text style={{fontSize:12, fontWeight:"bold"}}>{item.name}</Text>
         </View>
         <View style={{ flexDirection:"row" }}>
 
@@ -121,13 +157,13 @@ export default class my_contests extends Component {
         <View style={{ flexDirection:"row" }}>
 
           <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>$1</Text>
+            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>{item.entrance_fee}</Text>
           </View>
           <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>$40,000</Text>
+            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>$ {parseInt(item.slots) * parseInt(item.entrance_fee)}</Text>
           </View>
           <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>307/2122</Text>
+            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>{item.slots_filled}/{item.slots}</Text>
           </View>
           <View style={{ width:"40%", alignItems:"flex-end", alignContent:"flex-end" }}>
           <AntDesign name="right" size={14} color="grey" />
@@ -137,10 +173,15 @@ export default class my_contests extends Component {
 
         </View>
         <View style={{ flexDirection:"row", marginTop:5 }}>
-
-          <View style={{ width:"30%" }}>
-            <Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Edit Entry</Text>
-          </View>
+            {editable ? <TouchableOpacity style={{ width:"30%" }} onPress={() => {
+        this.props.navigation.replace("contest_detail",{contest_id:item.id, coin_data : item.selected_coins})
+    }}>
+      <Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Edit Entry</Text>
+    </TouchableOpacity> : <View style={{ width:"30%" }}>
+      <Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Contest Started</Text>
+    </View>
+    }
+          
           <View style={{ width:"30%", flexDirection:"row", }}>
           
           <Entypo name="add-user" size={12} color="#2870D6" />
@@ -151,7 +192,8 @@ export default class my_contests extends Component {
           </View>
           
           <View style={{ width:"40%", alignItems:"flex-end", alignContent:"flex-end" }}>
-          <Text style={{ fontSize: 11, color: "grey", fontWeight: "bold" }}>Today at 7PM EST</Text>
+          <Text style={{ fontSize: 11, color: "grey", fontWeight: "bold" }}>{Moment(item.start_time).format("ddd h:mm A")}</Text>
+          {/* <Text style={{ fontSize: 11, color: "grey", fontWeight: "bold" }}>Today at 7PM EST</Text> */}
 
           </View>
          
@@ -160,67 +202,10 @@ export default class my_contests extends Component {
         
 
       </View>
-     
-      <View style={styles.popbox1}>
-        <View style={{}}>
-          <Text style={{fontSize:12, fontWeight:"bold"}}>NBA $40K And -One [20 Entry Max]</Text>
-        </View>
-        <View style={{ flexDirection:"row" }}>
-
-          <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 8, color: "grey", fontWeight: "bold" }}>Entry</Text>
-          </View>
-          <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 8, color: "grey", fontWeight: "bold" }}>Prizes</Text>
-          </View>
-          <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 8, color: "grey", fontWeight: "bold" }}>Entries</Text>
-          </View>
-         
-
-        </View>
-        <View style={{ flexDirection:"row" }}>
-
-          <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>$1</Text>
-          </View>
-          <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>$40,000</Text>
-          </View>
-          <View style={{ width:"20%" }}>
-            <Text style={{ fontSize: 12, color: "#000", fontWeight: "bold" }}>307/2122</Text>
-          </View>
-          <View style={{ width:"40%", alignItems:"flex-end", alignContent:"flex-end" }}>
-          <AntDesign name="right" size={14} color="grey" />
-
-          </View>
-         
-
-        </View>
-        <View style={{ flexDirection:"row", marginTop:5 }}>
-
-          <View style={{ width:"30%" }}>
-            <Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Edit Entry</Text>
-          </View>
-          <View style={{ width:"30%", flexDirection:"row", }}>
-          
-          <Entypo name="add-user" size={12} color="#2870D6" />
-<View style={{paddingLeft:5}}>
-<Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Invite</Text>
-
-</View>
-          </View>
-          
-          <View style={{ width:"40%", alignItems:"flex-end", alignContent:"flex-end" }}>
-          <Text style={{ fontSize: 11, color: "grey", fontWeight: "bold" }}>Today at 7PM EST</Text>
-
-          </View>
-         
-
-        </View>
-        
-
-      </View>
+        )
+      }) : null
+      }
+    
 
     </View>
 

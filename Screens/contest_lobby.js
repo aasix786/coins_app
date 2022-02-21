@@ -6,15 +6,15 @@ import { Fontisto, Entypo, FontAwesome } from '@expo/vector-icons';
 import Moment from 'moment';
 import Footer from './footer'
 import { getUpcomingContests } from '../services/contests';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-console.log.disableYellowBox = true
+// console.log.disableYellowBox = true
 
 export default class contest_lobby extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user_id:0,
       contests_arr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
       toggle: [1,2,3,4,5],
       tag_selected: 0,
@@ -22,16 +22,24 @@ export default class contest_lobby extends Component {
     }
 
   }
-  componentDidMount(){
+  async componentDidMount(){
+    const val = await AsyncStorage.getItem("user_data");
+    let user_data = JSON.parse(val);
+    let user_id = user_data.id;
+    this.setState({user_id:user_id})
     this.fetchUpcomingContests();
   }
   fetchUpcomingContests = () => {
+    const {user_id} = this.state
+    let data = {
+      "user_id" : user_id,
+    }
     try {
 
-      getUpcomingContests()
+      getUpcomingContests(data)
       .then((res) => {
-        console.log("Contests Response ===>")
-        console.log(res.data)
+        // console.log("Contests Response ===>")
+        // console.log(res.data)
 
         if(res.data){
           let response = res.data;
@@ -47,12 +55,12 @@ export default class contest_lobby extends Component {
 
       })
       .catch((error) => {
-      console.log("Error: "+error)
+      // console.log("Error: "+error)
       });
 
 
     } catch (e) {
-      console.log("Internet error")
+      // console.log("Internet error")
     }
   }
 
@@ -139,7 +147,7 @@ export default class contest_lobby extends Component {
   <View style={{flexDirection:"row"}}>
   <View style={{ width: "35%", alignItems: "center" }}>
     <View style={{ width: "90%", justifyContent: "center", alignItems: "center", paddingTop: 5 }}>
-    <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>12</Text>
+    <Text style={{ fontSize: 18, color: "#000", fontWeight: "bold" }}>{item.slots}</Text>
     <Text style={{ fontSize: 10, color: "#808080", fontWeight: "bold" ,paddingVertical:3}}>ENTRIES(1/{item.slots})</Text>
     <Text style={{ fontSize: 10, color: "#808080", fontWeight: "bold" }}>{Moment(item.start_time).format("ddd h:mm A")} EST </Text>
     {/* Sat 4:00 PM EST */}

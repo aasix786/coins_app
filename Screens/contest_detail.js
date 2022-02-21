@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView,
+  View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView, Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, Feather, Entypo, AntDesign} from '@expo/vector-icons';
 import Moment from 'moment';
-import { getContestDetails } from '../services/contests';
+import { getContestDetails, submitContest } from '../services/contests';
 
 export default class contest_detail extends Component {
   // const [started, setStarted] = useState(false)
@@ -64,8 +64,68 @@ export default class contest_detail extends Component {
       console.log("Internet error")
     }
   }
+  removeSelection = (id) => {
+   
+      this.setState({selected_coins_arr: this.state.selected_coins_arr.filter(function(coin) { 
+          return coin.id !== id 
+      })});
+  
+  }
   submitContest = () => {
     const { user_id, contest_id, selected_coins_arr } = this.state;
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    console.log(user_id)
+    console.log(contest_id)
+    console.log(selected_coins_arr)
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
+    if(selected_coins_arr.length == 0){
+      Alert.alert(
+        "Sorry",
+        "Please select coins first",
+        [
+          { text: "OK" }
+        ]
+      );
+    }else if(!user_id || !contest_id){
+      Alert.alert(
+        "Sorry",
+        "Missing parameters",
+        [
+          { text: "OK" }
+        ]
+      );
+    }else{
+      let data = {
+        "user_id" : user_id,
+        "contest_id" : contest_id,
+        "coins_arr" : selected_coins_arr
+      }
+      submitContest(data)
+      .then((res) => {
+        console.log("Submit Contest Response ===>")
+        console.log(res.data)
+
+        if(res.data){
+          let response = res.data;
+          if(response.success){
+           this.props.navigation.push('home')
+          }else{
+            alert(response.message)
+          }
+
+        }
+
+
+
+      })
+      .catch((error) => {
+      console.log("Error: "+error)
+      });
+    }
+
+
+
   }
   render() {
     const { contest_data } = this.state
@@ -145,11 +205,15 @@ if(contest_data){
       </View>
       <View style={{ width: "50%", flexDirection:"row" }} >
       <View style={{ width:"42%", paddingTop: 5, paddingLeft:10 }}>
-          <Text style={{ fontSize: 16, color: "#000", fontWeight: "bold" }}>${this.state.selected_coins_arr[i].quote.USD.price}</Text>
+          <Text style={{ fontSize: 16, color: "#000", fontWeight: "bold" }}>${this.state.selected_coins_arr[i].quote ? this.state.selected_coins_arr[i].quote.USD.price : this.state.selected_coins_arr[i].price}</Text>
           <Text style={{ fontSize: 12, color: "#000" }}>FPPF 58..3</Text>
         </View>
         <View style={{  paddingTop: 5, alignContent:"center", alignItems:"center", justifyContent:"center" }}>
+        <TouchableOpacity onPress={() => {this.removeSelection(this.state.selected_coins_arr[i].id)}}>
         <Entypo name="circle-with-cross" size={22} color="grey" />
+
+        
+        </TouchableOpacity>
 </View>
 
 
@@ -166,12 +230,15 @@ if(contest_data){
         <View style={{ flex:1, alignItems: "center", backgroundColor: "#fbfbfb", paddingBottom:130 }}>
         <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 40, backgroundColor: "#000", paddingBottom: 15 }}>
           <View style={{ marginTop: 10, flexDirection: "row" }}>
-            <TouchableOpacity  onPress={()=>{
-               this.props.navigation.reset({
-          index: 0,
-          routes: [{ name: 'contest_lobby' }],
-        });
-            }} style={{ width: "10%", alignItems: "center" }}>
+            <TouchableOpacity  
+             onPress={()=>this.props.navigation.goBack()}
+        //     onPress={()=>{
+        //        this.props.navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: 'contest_lobby' }],
+        // });
+        //     }} 
+            style={{ width: "10%", alignItems: "center" }}>
               <AntDesign name="close" size={24} color="#fff" />
             </TouchableOpacity>
             <View style={{ width: "75%", alignContent: "center", alignItems: "center" }}>
