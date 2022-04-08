@@ -47,6 +47,5 @@
   },
   "private": true,
   "name": "coinsApp",
-  "version": "1.0.0",
-  "homepage": "/webapp"
+  "version": "1.0.0"
 }
