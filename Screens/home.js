@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {
   View, Text, TouchableOpacity, Image, StyleSheet, Dimensions,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { Ionicons, Feather, Entypo, AntDesign} from '@expo/vector-icons';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -66,7 +68,12 @@ export default class home extends Component {
 
 
           <TouchableOpacity style={styles.SignUp_button}
-          onPress={() => this.props.navigation.navigate("player")}
+          onPress={() => {
+            AsyncStorage.clear();
+            this.props.navigation.push("login")
+
+          }}
+          // onPress={() => this.props.navigation.navigate("player")}
           >
 
             <Text style={{ color: '#fff', fontSize: 18 }}>Deposit</Text>

@@ -5,7 +5,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { signupRequest } from '../services/auth';
 
 export default class signup extends Component {
@@ -97,8 +97,8 @@ export default class signup extends Component {
 
       <View style={{ width: screenWidth, height: screenHeight, alignItems: "center", backgroundColor: "#fff" }}>
 
-        <KeyboardAwareScrollView
-          contentContainerStyle={{ width: screenWidth, height: screenHeight, alignItems: "center" }}>
+        {/* <KeyboardAwareScrollView
+          contentContainerStyle={{ width: screenWidth, height: screenHeight, alignItems: "center" }}> */}
           <View style={{ width: "100%", alignContent: "center", alignItems: "center", marginTop: 50, flexDirection: "row", }} >
             <TouchableOpacity
               style={{ width: "15%", alignItems: "center" }} onPress={() => this.props.navigation.navigate('login')}
@@ -238,7 +238,7 @@ export default class signup extends Component {
 
           </View>
 
-        </KeyboardAwareScrollView>
+        {/* </KeyboardAwareScrollView> */}
 
 
       </View>

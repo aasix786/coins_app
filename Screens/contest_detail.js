@@ -17,7 +17,8 @@ export default class contest_detail extends Component {
       contest_id: this.data.contest_id,
       user_id: 0,
       contest_data: null,
-      selected_coins_arr : this.data.coin_data,
+      selected_coins_arr : [],
+      // selected_coins_arr : this.data.coin_data,
 
     }
 
@@ -26,7 +27,11 @@ export default class contest_detail extends Component {
     const val = await AsyncStorage.getItem("user_data");
     let user_data = JSON.parse(val);
     let user_id = user_data.id;
-    this.setState({user_id:user_id})
+    let s_c_data = [];
+    if(this.data.coin_data){
+      s_c_data = this.data.coin_data
+    }
+    this.setState({user_id:user_id, selected_coins_arr: s_c_data})
 
     this.fetchContestDetails();
   }
@@ -39,8 +44,8 @@ export default class contest_detail extends Component {
       }
       getContestDetails(data)
       .then((res) => {
-        console.log("Contest Details Response ===>")
-        console.log(res.data)
+         // console.log("Contest Details Response ===>")
+        // console.log(res.data)
 
         if(res.data){
           let response = res.data;
@@ -56,12 +61,12 @@ export default class contest_detail extends Component {
 
       })
       .catch((error) => {
-      console.log("Error: "+error)
+      // console.log("Error: "+error)
       });
 
 
     } catch (e) {
-      console.log("Internet error")
+      // console.log("Internet error")
     }
   }
   removeSelection = (id) => {
@@ -73,11 +78,11 @@ export default class contest_detail extends Component {
   }
   submitContest = () => {
     const { user_id, contest_id, selected_coins_arr } = this.state;
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    console.log(user_id)
-    console.log(contest_id)
-    console.log(selected_coins_arr)
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    // console.log(user_id)
+    // console.log(contest_id)
+    // console.log(selected_coins_arr)
+    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 
     if(selected_coins_arr.length == 0){
       Alert.alert(
@@ -103,8 +108,8 @@ export default class contest_detail extends Component {
       }
       submitContest(data)
       .then((res) => {
-        console.log("Submit Contest Response ===>")
-        console.log(res.data)
+        // console.log("Submit Contest Response ===>")
+        // console.log(res.data)
 
         if(res.data){
           let response = res.data;
@@ -120,7 +125,7 @@ export default class contest_detail extends Component {
 
       })
       .catch((error) => {
-      console.log("Error: "+error)
+      console.log(error.response)
       });
     }
 

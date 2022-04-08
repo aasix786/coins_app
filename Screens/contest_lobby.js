@@ -118,7 +118,6 @@ export default class contest_lobby extends Component {
 
                   >
                     <Text style={{ textAlign: "center",fontWeight:"bold" }}>featured</Text>
-
                   </TouchableOpacity>
 
                 );
@@ -136,10 +135,9 @@ export default class contest_lobby extends Component {
         <ScrollView showsVerticalScrollIndicator={false}>
         {this.state.contests_arr.length > 0 ?
       this.state.contests_arr.map((item,index)=>{
-
         return(
           <View key={index} style={{marginTop:10}}>
-          <TouchableOpacity onPress={() => this.props.navigation.push("contest_detail",{contest_id:item.id, coin_data : []})} style={styles.popbox1}>
+          <TouchableOpacity onPress={() => this.props.navigation.push("contest_detail",{contest_id:item.id, coin_data : item.selected_coins})} style={styles.popbox1}>
           <View style={{ paddingHorizontal: 20,flexDirection:"row"}}>
           <Entypo name="star" size={20} color="#5978a1" />
             <Text style={{ fontSize: 15, color: "#808080", fontWeight: "bold",paddingHorizontal:5 }}>{item.name}</Text>
