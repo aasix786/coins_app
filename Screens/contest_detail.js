@@ -134,11 +134,25 @@ export default class contest_detail extends Component {
   }
   render() {
     const { contest_data } = this.state
-
+console.log("contest_data")
+console.log(contest_data)
     let slots_arr = [];
     console.log("this.state.selected_coins_arr")
     console.log(this.state.selected_coins_arr)
+
+    let rem_salary = 0; 
+
+
 if(contest_data){
+   rem_salary = parseFloat(contest_data.contest_salary_cap) 
+
+  if(this.state.selected_coins_arr.length > 0){
+    this.state.selected_coins_arr.map((item, index) => {
+if(item.investment){
+rem_salary = (rem_salary - parseFloat(item.investment))
+}
+    })
+  }
   for(let i = 0; i < contest_data.slots; i++){
     let viewData = null;
     if(!this.state.selected_coins_arr[i]){
@@ -158,7 +172,7 @@ if(contest_data){
 
       </View>
       <TouchableOpacity style={{ width: "15%", alignItems: "center" }}
-       onPress={()=>this.props.navigation.navigate("coin_selection",{contest_id : this.state.contest_id, coin_chosen : this.state.selected_coins_arr})}
+       onPress={()=>this.props.navigation.navigate("coin_selection",{contest_id : this.state.contest_id, coin_chosen : this.state.selected_coins_arr, rem_salary:rem_salary})}
        >
         <View style={{ width: "90%", justifyContent: "center", alignItems: "center", paddingTop: 10 }}>
           <AntDesign name="right" size={20} color="#e6e6e6" />
@@ -309,7 +323,7 @@ if(contest_data){
 
 </View>
 <View style={{width:"50%", alignItems:"flex-end", paddingVertical:12}}>
-<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Rem Salary: <Text style={{color:"#8E995F", fontWeight:"bold"}}>$50,000</Text></Text>
+<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Rem Salary: <Text style={{color:"#8E995F", fontWeight:"bold"}}>$ {rem_salary}</Text></Text>
 
 
 </View>
@@ -322,7 +336,7 @@ if(contest_data){
 
 </View>
 <View style={{width:"50%", alignItems:"flex-end", paddingBottom:12}}>
-<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Avg Coin investment <Text style={{color:"#8E995F", fontWeight:"bold"}}>$8,333</Text></Text>
+<Text style={{fontSize:16, fontWeight:"bold", color:"#fff", textAlign:"right"}}>Avg Coin investment <Text style={{color:"#8E995F", fontWeight:"bold"}}>$0</Text></Text>
 
 
 </View>

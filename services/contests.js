@@ -15,6 +15,12 @@ export const getUpcomingContests = (data) => {
   export const getMyContests = (data) => {
     return  axios.post(`${URL}my-contests`, data)
   };
+  export const checkContestWinner = (data) => {
+    return  axios.post(`${URL}check-winner`,data)
+  };
+  export const startContest = () => {
+    return  axios.get(`${URL}contest-start`)
+  };
   export const getCoinsData = () => {
 // ....TESTING API
     // const headers = {

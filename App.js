@@ -3,6 +3,7 @@ import AppNavigator from './Navigation/AppNavigator';
 import LoginNavigator from './Navigation/LoginNavigator';
 import AppLoading from 'expo-app-loading'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { startContest } from "./services/contests";
 
 
 export default class App extends Component {
@@ -22,6 +23,23 @@ export default class App extends Component {
 isOk = true;
     }
     this.setState({ loggedIn: isOk, loading:false })
+    setInterval(() => {
+      try{
+        startContest()
+        .then((res) => {
+          if(res.data){
+           console.log(res.data)
+          }
+        })
+        .catch((error) => {
+        console.log("Error: "+error)
+        });
+      }
+      catch(e){
+        console.log(e)
+      }
+     
+    }, 4000);
   }
   render(){
     if (this.state.loading) {

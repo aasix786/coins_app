@@ -5,7 +5,7 @@ import {
 import { Fontisto, Entypo, FontAwesome } from '@expo/vector-icons';
 import Moment from 'moment';
 import Footer from './footer'
-import { getUpcomingContests } from '../services/contests';
+import { checkContestWinner, getUpcomingContests } from '../services/contests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // console.log.disableYellowBox = true
@@ -38,9 +38,6 @@ export default class contest_lobby extends Component {
 
       getUpcomingContests(data)
       .then((res) => {
-        // console.log("Contests Response ===>")
-        // console.log(res.data)
-
         if(res.data){
           let response = res.data;
           if(response.success){
@@ -48,20 +45,51 @@ export default class contest_lobby extends Component {
           }else{
             alert(response.message)
           }
-
         }
-
-
-
       })
       .catch((error) => {
-      // console.log("Error: "+error)
+      console.log("Error: "+error)
       });
 
 
     } catch (e) {
       // console.log("Internet error")
     }
+  }
+
+  check_contest = (item) => {
+
+    try {
+let data = {
+  "contest_id" : item.id
+}
+      checkContestWinner(data)
+      .then((res) => {
+        if(res.data){
+          let response = res.data;
+          if(response.success){
+            Alert.alert(
+              "Contest Ended",
+              response.message,
+              [
+                { text: "OK" }
+              ]
+            );
+          }else{
+            this.props.navigation.push("contest_detail",{contest_id:item.id, coin_data : item.selected_coins})
+
+          }
+        }
+      })
+      .catch((error) => {
+      console.log("Error: "+error)
+      });
+
+
+    } catch (e) {
+      // console.log("Internet error")
+    }
+
   }
 
   render() {
@@ -137,7 +165,7 @@ export default class contest_lobby extends Component {
       this.state.contests_arr.map((item,index)=>{
         return(
           <View key={index} style={{marginTop:10}}>
-          <TouchableOpacity onPress={() => this.props.navigation.push("contest_detail",{contest_id:item.id, coin_data : item.selected_coins})} style={styles.popbox1}>
+          <TouchableOpacity onPress={() => this.check_contest(item)} style={styles.popbox1}>
           <View style={{ paddingHorizontal: 20,flexDirection:"row"}}>
           <Entypo name="star" size={20} color="#5978a1" />
             <Text style={{ fontSize: 15, color: "#808080", fontWeight: "bold",paddingHorizontal:5 }}>{item.name}</Text>

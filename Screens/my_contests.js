@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet,
+  View, Text, TouchableOpacity, Image, StyleSheet, Alert
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Moment from 'moment';
 import { Fontisto, Feather, Entypo, AntDesign} from '@expo/vector-icons';
-import { getMyContests } from '../services/contests';
+import { checkContestWinner, getMyContests } from '../services/contests';
 
 export default class my_contests extends Component {
   constructor(props) {
@@ -56,6 +56,39 @@ export default class my_contests extends Component {
     } catch (e) {
       console.log("Internet error")
     }
+  }
+  check_contest = (item) => {
+
+    try {
+let data = {
+  "contest_id" : item.id
+}
+      checkContestWinner(data)
+      .then((res) => {
+        if(res.data){
+          let response = res.data;
+          if(response.success){
+            Alert.alert(
+              "Contest Ended",
+              response.message,
+              [
+                { text: "OK" }
+              ]
+            );
+          }else{
+            this.props.navigation.replace("contest_detail",{contest_id:item.id, coin_data : item.selected_coins})
+          }
+        }
+      })
+      .catch((error) => {
+      console.log("Error: "+error)
+      });
+
+
+    } catch (e) {
+      // console.log("Internet error")
+    }
+
   }
   render() {
 
@@ -136,7 +169,7 @@ export default class my_contests extends Component {
           }
           
                   return(
-      <View key={index} style={styles.popbox1}>
+      <TouchableOpacity key={index} style={styles.popbox1} onPress={() => this.check_contest(item)}>
         <View style={{}}>
           <Text style={{fontSize:12, fontWeight:"bold"}}>{item.name}</Text>
         </View>
@@ -173,11 +206,16 @@ export default class my_contests extends Component {
 
         </View>
         <View style={{ flexDirection:"row", marginTop:5 }}>
-            {editable ? <TouchableOpacity style={{ width:"30%" }} onPress={() => {
-        this.props.navigation.replace("contest_detail",{contest_id:item.id, coin_data : item.selected_coins})
-    }}>
+            {editable ? 
+            <View style={{ width:"30%" }} >
       <Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Edit Entry</Text>
-    </TouchableOpacity> : <View style={{ width:"30%" }}>
+    </View> 
+    : item.status == 2 ?
+    <View style={{ width:"30%" }}>
+      <Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Contest Ended</Text>
+    </View>
+    :
+    <View style={{ width:"30%" }}>
       <Text style={{ fontSize: 12, color: "#2870D6", fontWeight: "bold" }}>Contest Started</Text>
     </View>
     }
@@ -201,7 +239,7 @@ export default class my_contests extends Component {
         </View>
         
 
-      </View>
+      </TouchableOpacity>
         )
       }) : null
       }

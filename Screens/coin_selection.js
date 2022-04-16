@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, StyleSheet, ScrollView
+  View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, TextInput
 } from 'react-native';
 import { Feather, Entypo, FontAwesome} from '@expo/vector-icons';
 import Footer from './footer'
 import { getCoinsData } from '../services/contests';
-
+import RBSheet from "react-native-raw-bottom-sheet";
 export default class coin_selection extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +13,11 @@ export default class coin_selection extends Component {
     this.state = {
       coins_arr:[],
       contest_id: this.data.contest_id,
-      coin_chosen: this.data.coin_chosen ? this.data.coin_chosen : []
+      rem_salary: this.data.rem_salary,
+      coin_chosen: this.data.coin_chosen ? this.data.coin_chosen : [],
+
+      current_item : null,
+      current_coin_salary:0
 
     }
 
@@ -22,13 +26,20 @@ export default class coin_selection extends Component {
     this.fetchCoinsData();
   }
   selectCoin = (item) => {
+    this.RBSheet.open();
+this.setState({current_item:item})
+  }
+  submitCoin = () => {
+   
+    this.RBSheet.close();
     let present = this.state.coin_chosen.filter(obj => {
-      return obj.symbol === item.symbol
+      return obj.symbol === this.state.current_item.symbol
     })
    if(present && present.length > 0){
      alert("Can't select same coin again")
    } else{
-      this.state.coin_chosen.push(item);
+     this.state.current_item.investment = this.state.current_coin_salary;
+      this.state.coin_chosen.push(this.state.current_item);
       this.props.navigation.replace("contest_detail",{contest_id:this.state.contest_id, coin_data : this.state.coin_chosen})
    }
     
@@ -370,7 +381,55 @@ export default class coin_selection extends Component {
 
 
 
+ <RBSheet
+          ref={ref => {
+            this.RBSheet = ref;
+          }}
+          height={300}
+          openDuration={250}
+          customStyles={{
+            container: {
+              alignItems: "center"
+            }
+          }}
+        >
+          <View style={{width: "100%"}}>
+          <View style={{ width: "100%", alignItems: "center", alignContent: "center", marginTop: 20 }}>
+          <View style={{ width: "70%", height:90, backgroundColor: "#f5f7f9", paddingVertical: 10 }}>
+            <View style={{ width: "85%" }}>
+              <TextInput
+               keyboardType="numeric"
+                style={{ color: '#000', fontSize: 60, padding:5,paddingLeft:15, textAlign:"center" }}
+                placeholder={"0"}
+                placeholderTextColor="#9eb0be"
+                onChangeText={(current_coin_salary) => {
+                  current_coin_salary <= this.state.rem_salary && this.setState({ current_coin_salary })
+                }}
+                value={this.state.current_coin_salary}
+              />
+             
+            </View>
+            
+          </View>
+          <View style={{marginTop:10}}>
+              <Text style={{fontSize:12, color:"#000"}}>Enter a salary amount you would like to invest </Text>
 
+              </View>
+          <View style={{marginTop:10}}>
+              <Text style={{fontSize:10, color:"#808080"}}>Remaining Salary : <Text style={{fontSize:14, color:"#000"}}>$ {this.state.rem_salary}</Text> </Text>
+
+              </View>
+
+              <TouchableOpacity style={styles.SignUp_button} 
+        onPress={() => this.submitCoin()}
+        >
+
+          <Text style={{ color: '#fff', fontSize: 18 }}>Submit</Text>
+
+        </TouchableOpacity>
+        </View> 
+          </View>
+        </RBSheet>
 
         <Footer title={"player"} back={false} navigation={this.props.navigation} />
 
@@ -432,13 +491,13 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   SignUp_button: {
-    padding: 5,
-    marginHorizontal: 15,
-    marginTop: 15,
+    width: "80%",
+    marginTop: 60,
+    paddingVertical: 10,
     alignItems: "center",
     borderRadius: 10,
-    borderColor: "#00a2fb",
-    backgroundColor: "#00a2fb",
+    borderColor: "#000",
+    backgroundColor: "#000",
     borderWidth: 1
   },
   search: {
